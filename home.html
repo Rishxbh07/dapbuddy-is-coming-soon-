@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DapBuddy - Coming Soon</title>
+    
+    <style>
+        /* Basic Setup & Font - Same as loader */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(180deg, #ffffff 0%, #f5f5f7 100%);
+            color: #1d1d1f;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        /* Light Rays Background */
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, #ffffff 0%, #f5f5f7 100%);
+            overflow: hidden;
+        }
+
+        .ray {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 16px;
+            height: 100vh;
+            background: linear-gradient(to bottom, 
+                transparent 0%, 
+                rgba(26, 77, 158, 0.15) 45%, 
+                rgba(139, 92, 246, 0.3) 50%, 
+                rgba(59, 130, 246, 0.15) 55%, 
+                transparent 100%);
+            transform-origin: top center;
+            opacity: 0.6;
+            animation: rotate 20s linear infinite;
+        }
+
+        .ray:nth-child(1) { animation-delay: 0s; }
+        .ray:nth-child(2) { animation-delay: -2s; }
+        .ray:nth-child(3) { animation-delay: -4s; }
+        .ray:nth-child(4) { animation-delay: -6s; }
+        .ray:nth-child(5) { animation-delay: -8s; }
+        .ray:nth-child(6) { animation-delay: -10s; }
+        .ray:nth-child(7) { animation-delay: -12s; }
+        .ray:nth-child(8) { animation-delay: -14s; }
+
+        @keyframes rotate {
+            from {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+            to {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+
+        /* Content Container */
+        .content {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100vw;
+            padding: 20px;
+        }
+
+        /* Logo */
+        .logo {
+            width: 200px;
+            height: auto;
+            max-width: 50vw;
+            margin-bottom: 32px;
+            opacity: 0;
+            transform: scale(0.8) translateY(20px);
+            animation: logoPopIn 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            animation-delay: 0.2s;
+            filter: drop-shadow(0 8px 32px rgba(0,0,0,0.08));
+        }
+
+        /* Coming Soon Text - Matching brand style */
+        .text {
+            font-size: clamp(24px, 6vw, 42px);
+            font-weight: 600;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+            letter-spacing: -0.5px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: textSlideIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            animation-delay: 0.8s;
+        }
+
+        /* Subtitle */
+        .subtitle {
+            font-size: clamp(14px, 3.5vw, 18px);
+            font-weight: 500;
+            color: #8e8e93;
+            margin-top: 16px;
+            text-align: center;
+            letter-spacing: 0.5px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: textSlideIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            animation-delay: 1.4s;
+        }
+
+        /* Animation Keyframes - Same as loader */
+        @keyframes logoPopIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.6) translateY(30px);
+            }
+            60% {
+                transform: scale(1.05) translateY(-5px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        @keyframes textSlideIn {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .logo {
+                width: 100px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                width: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background">
+        <div class="ray"></div>
+        <div class="ray"></div>
+        <div class="ray"></div>
+        <div class="ray"></div>
+        <div class="ray"></div>
+        <div class="ray"></div>
+        <div class="ray"></div>
+        <div class="ray"></div>
+    </div>
+    
+    <div class="content">
+        <img src="assets/icons/loadingscreen.png" alt="DapBuddy Logo" class="logo">
+        <h1 class="text">dapBuddy coming soon....</h1>
+        <p class="subtitle">Never Pay the full price</p>
+    </div>
+</body>
+</html>
