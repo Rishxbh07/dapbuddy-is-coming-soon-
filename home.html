@@ -21,8 +21,10 @@
             background: linear-gradient(180deg, #ffffff 0%, #f5f5f7 100%);
             color: #1d1d1f;
             overflow-x: hidden;
-            overflow-y: auto; /* Allow scrolling for the form */
-            height: 100%;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
         /* Light Rays Background */
@@ -64,12 +66,8 @@
         .ray:nth-child(8) { animation-delay: -14s; }
 
         @keyframes rotate {
-            from {
-                transform: translate(-50%, -50%) rotate(0deg);
-            }
-            to {
-                transform: translate(-50%, -50%) rotate(360deg);
-            }
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
         }
 
         /* Content Container */
@@ -80,9 +78,9 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            width: 100vw;
-            padding: 40px 20px; /* Added padding */
+            flex-grow: 1; /* Pushes footer down */
+            width: 100%;
+            padding: 60px 20px;
         }
 
         /* Logo */
@@ -98,10 +96,10 @@
             filter: drop-shadow(0 8px 32px rgba(0,0,0,0.08));
         }
 
-        /* Coming Soon Text */
+        /* Text Styles */
         .text {
             font-size: clamp(24px, 6vw, 42px);
-            font-weight: 600;
+            font-weight: 700;
             background: linear-gradient(135deg, #3b82f6, #8b5cf6);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -114,30 +112,33 @@
             animation-delay: 0.8s;
         }
 
-        /* Subtitle */
         .subtitle {
             font-size: clamp(14px, 3.5vw, 18px);
             font-weight: 500;
-            color: #8e8e93;
-            margin-top: 16px;
+            color: #6e6e73;
+            margin-top: 12px;
             text-align: center;
-            letter-spacing: 0.5px;
+            letter-spacing: 0px;
             opacity: 0;
             transform: translateY(20px);
             animation: textSlideIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
             animation-delay: 1.4s;
+            max-width: 600px;
         }
 
-        /* New Form Styling */
+        /* --- New & Improved Form Styling --- */
         #waitlist-form {
             width: 100%;
-            max-width: 440px;
+            max-width: 480px;
             margin-top: 40px;
-            background: #ffffff;
-            border-radius: 12px;
-            padding: 24px;
-            border: 1px solid #e5e5e5;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 32px;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.04), 
+                0 1px 3px rgba(0,0,0,0.02);
             opacity: 0;
             transform: translateY(20px);
             animation: textSlideIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
@@ -145,10 +146,10 @@
         }
 
         #waitlist-form h3 {
-            font-size: 20px;
+            font-size: 22px;
             font-weight: 700;
             text-align: center;
-            margin-bottom: 24px;
+            margin-bottom: 28px;
             color: #1d1d1f;
         }
 
@@ -159,120 +160,261 @@
         }
         
         .form-group {
-            margin-bottom: 16px;
+            margin-bottom: 20px;
+            position: relative;
         }
 
-        /* Make some fields span 2 columns */
         .form-group.col-span-2 {
             grid-column: 1 / -1;
         }
 
         .form-group label {
             display: block;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 600;
-            margin-bottom: 6px;
-            color: #555;
+            margin-bottom: 8px;
+            color: #4a4a4f;
+            margin-left: 4px;
         }
 
+        .form-group label span {
+            color: #ef4444;
+        }
+
+        /* Input & Select Styling */
         .form-group input,
         .form-group select {
             width: 100%;
-            padding: 12px;
+            padding: 14px 16px;
             font-size: 15px;
-            border: 1px solid #d2d2d7;
-            border-radius: 8px;
-            background: #fdfdfd;
-            -webkit-appearance: none;
+            color: #1d1d1f;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            background: #fbfbfd;
+            transition: all 0.2s ease;
+            -webkit-appearance: none; /* Removes default arrow on iOS */
             appearance: none;
+        }
+
+        /* Custom Select Arrow */
+        .select-wrapper {
+            position: relative;
+        }
+        .select-wrapper::after {
+            content: "▼";
+            font-size: 10px;
+            color: #86868b;
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
         }
 
         .form-group input:focus,
         .form-group select:focus {
             outline: none;
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+            border-color: #8b5cf6; /* DapBuddy Purple */
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.15);
+        }
+        
+        .form-group input::placeholder {
+            color: #a1a1a6;
         }
 
-        /* Required field asterisk */
-        .form-group label span {
-            color: #f00;
+        /* Other Service Reveal Animation */
+        #other-service-container {
+            display: none;
+            animation: slideDown 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+        
+        #other-service-container.visible {
+            display: block;
         }
 
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Button */
         #form-button {
             width: 100%;
-            padding: 14px;
+            padding: 16px;
             font-size: 16px;
-            font-weight: 700;
+            font-weight: 600;
             color: #fff;
             background: linear-gradient(135deg, #3b82f6, #8b5cf6);
             border: none;
-            border-radius: 8px;
+            border-radius: 12px;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: transform 0.1s ease, box-shadow 0.2s ease;
+            margin-top: 8px;
         }
 
         #form-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transform: translateY(-1px);
+            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+        }
+
+        #form-button:active {
+            transform: translateY(1px);
         }
 
         #form-button:disabled {
-            background: #aaa;
+            background: #d2d2d7;
             cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
         }
 
         #form-message {
-            margin-top: 16px;
+            margin-top: 20px;
             font-size: 14px;
             text-align: center;
-            font-weight: 600;
+            font-weight: 500;
+            min-height: 20px;
         }
-        .success { color: green; }
-        .error { color: red; }
-
+        .success { color: #10b981; }
+        .error { color: #ef4444; }
 
         /* Animation Keyframes */
         @keyframes logoPopIn {
-            0% {
-                opacity: 0;
-                transform: scale(0.6) translateY(30px);
-            }
-            60% {
-                transform: scale(1.05) translateY(-5px);
-            }
-            100% {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
+            0% { opacity: 0; transform: scale(0.6) translateY(30px); }
+            60% { transform: scale(1.05) translateY(-5px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
         }
 
         @keyframes textSlideIn {
-            0% {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
 
         /* Mobile Responsive */
         @media (max-width: 480px) {
-            .logo {
-                width: 100px;
+            .logo { width: 140px; }
+            #waitlist-form { padding: 24px; border-radius: 16px; }
+            .form-grid { grid-template-columns: 1fr; gap: 0; }
+            .form-group.col-span-2 { grid-column: auto; }
+            .content { padding: 40px 16px; }
+        }
+
+        /* Footer Styling (Updated) */
+        footer {
+            width: 100%;
+            background: #ffffff; 
+            padding: 60px 20px 20px;
+            border-top: 1px solid #e5e5e5;
+            margin-top: auto; 
+        }
+
+        .footer-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-brand {
+            flex: 1 1 300px;
+        }
+
+        .footer-brand .brand-name {
+            font-size: 24px;
+            font-weight: 700;
+            color: #8b5cf6; 
+            margin-bottom: 16px;
+        }
+
+        .footer-brand p {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+            max-width: 300px;
+        }
+
+        .footer-brand .slogan {
+            font-size: 12px;
+            color: #999;
+            margin-top: 12px;
+            display: block;
+        }
+
+        .footer-links {
+            flex: 1 1 200px;
+        }
+
+        .footer-links h4, .footer-social h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1d1d1f;
+            margin-bottom: 20px;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links ul li a {
+            color: #666;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .footer-links ul li a:hover {
+            color: #3b82f6;
+        }
+
+        .footer-social {
+            flex: 0 1 200px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 16px;
+        }
+
+        .social-icon {
+            width: 28px;
+            height: 28px;
+            fill: #666;
+            transition: fill 0.2s;
+        }
+
+        .social-icon:hover {
+            fill: #FF0000; /* YouTube Red */
+        }
+
+        .copyright {
+            border-top: 1px solid #f0f0f0;
+            padding-top: 20px;
+            text-align: center;
+            font-size: 13px;
+            color: #999;
+        }
+
+        @media (max-width: 768px) {
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 30px;
             }
-            #waitlist-form {
-                padding: 16px;
+            .footer-brand, .footer-brand p, .footer-social {
+                align-items: center;
+                margin: 0 auto;
+                text-align: center;
             }
-            /* Stack grid items on mobile */
-            .form-grid {
-                grid-template-columns: 1fr;
-            }
-            /* Reset column span */
-            .form-group.col-span-2 {
-                grid-column: auto;
+            .social-icons {
+                justify-content: center;
             }
         }
     </style>
@@ -291,7 +433,7 @@
     
     <div class="content">
         <img src="assets/icons/loadingscreen.png" alt="DapBuddy Logo" class="logo">
-        <h1 class="text">dapBuddy coming soon....</h1>
+        <h1 class="text">dapBuddy coming soon...</h1>
         <p class="subtitle">Get notified when we launch & get exclusive discounts!</p>
 
         <form id="waitlist-form">
@@ -309,42 +451,54 @@
 
             <div class="form-grid">
                 <div class="form-group">
-                    <label for="mobile">Mobile (Optional)</label>
+                    <label for="mobile">Mobile</label>
                     <input type="tel" id="mobile" name="mobile" placeholder="+91...">
                 </div>
 
                 <div class="form-group">
-                    <label for="city">City (Optional)</label>
-                    <input type="text" id="city" name="city" placeholder="e.g., Pune">
+                    <label for="city">City</label>
+                    <input type="text" id="city" name="city" placeholder="e.g. Pune">
                 </div>
 
                 <div class="form-group">
-                    <label for="age">Age (Optional)</label>
+                    <label for="age">Age</label>
                     <input type="number" id="age" name="age" placeholder="25">
                 </div>
 
                 <div class="form-group">
-                    <label for="gender">Gender (Optional)</label>
-                    <select id="gender" name="gender">
-                        <option value="">Select...</option>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                        <option value="other">Other</option>
-                        <option value="prefer_not_to_say">Prefer not to say</option>
-                    </select>
+                    <label for="gender">Gender</label>
+                    <div class="select-wrapper">
+                        <select id="gender" name="gender">
+                            <option value="">Select...</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
                 </div>
             </div>
 
             <div class="form-group col-span-2">
-                <label for="service">Interested Service (Optional)</label>
-                <select id="service" name="service">
-                    <option value="">Which service interests you most?</option>
-                    <option value="netflix">Netflix</option>
-                    <option value="spotify">Spotify</option>
-                    <option value="hotstar">Hotstar</option>
-                    <option value="prime_video">Prime Video</option>
-                    <option value="other">Other</option>
-                </select>
+                <label for="service">Interested Service <span>*</span></label>
+                <div class="select-wrapper">
+                    <select id="service" name="service" required>
+                        <option value="" disabled selected>Select a service...</option>
+                        <option value="Apple Music">Apple Music</option>
+                        <option value="Crunchyroll">Crunchyroll</option>
+                        <option value="JioSaavn">JioSaavn</option>
+                        <option value="Netflix">Netflix</option>
+                        <option value="NordVPN">NordVPN</option>
+                        <option value="Spotify">Spotify</option>
+                        <option value="Surfshark">Surfshark</option>
+                        <option value="YouTube">YouTube Premium</option>
+                        <option value="other">Other...</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group col-span-2" id="other-service-container">
+                <label for="other_service_name">Which service? <span>*</span></label>
+                <input type="text" id="other_service_name" name="other_service_name" placeholder="Type service name...">
             </div>
 
             <div class="form-group col-span-2">
@@ -355,14 +509,46 @@
         </form>
     </div>
 
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="brand-name">DapBuddy</div>
+                <p>Split premium plans, save together. Built to keep your subscriptions smarter, safer, and more affordable.</p>
+                <span class="slogan">Safe. Verified. Transparent.</span>
+            </div>
+
+            <div class="footer-links">
+                <h4>Legal & Contact</h4>
+                <ul>
+                    <li><a href="mailto:contact@dapbuddy.com">Contact Us</a></li>
+                    <li><a href="terms.html">Terms & Conditions</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="terms.html#refunds">Refund Policy</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-social">
+                <h4>Follow Us</h4>
+                <div class="social-icons">
+                    <a href="https://youtube.com/@dapbuddy?si=-0UWx3NK94xv1Xy4" target="_blank" aria-label="YouTube">
+                        <svg class="social-icon" viewBox="0 0 24 24">
+                            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            &copy; 2025 DapBuddy. All Rights Reserved.
+        </div>
+    </footer>
+
     <script type="module">
-      // Import the functions you need from the SDKs
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-      // MAKE SURE TO IMPORT FIRESTORE FUNCTIONS
       import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-      // 1. PASTE YOUR FIREBASE CONFIG HERE
-      // (This is the config you pasted into index.html by mistake)
+      // FIREBASE CONFIG
       const firebaseConfig = {
         apiKey: "AIzaSyCVzx4qgNLqNRB6ksKsVueG3xOGRSLnRWk",
         authDomain: "dapbuddy-8d1ee.firebaseapp.com",
@@ -373,28 +559,47 @@
         measurementId: "G-49B2FG09BD"
       };
 
-      // Initialize Firebase
       const app = initializeApp(firebaseConfig);
-      // Initialize Firestore
       const db = getFirestore(app);
 
-      // 2. Get Form Elements
+      // Elements
       const waitlistForm = document.getElementById('waitlist-form');
       const formButton = document.getElementById('form-button');
       const formMessage = document.getElementById('form-message');
+      const serviceSelect = document.getElementById('service');
+      const otherContainer = document.getElementById('other-service-container');
+      const otherInput = document.getElementById('other_service_name');
 
-      // 3. Add Submit Event Listener
+      // 1. Handle "Other" Selection
+      serviceSelect.addEventListener('change', (e) => {
+        if (e.target.value === 'other') {
+            otherContainer.classList.add('visible');
+            otherInput.required = true;
+            otherInput.focus();
+        } else {
+            otherContainer.classList.remove('visible');
+            otherInput.required = false;
+            otherInput.value = '';
+        }
+      });
+
+      // 2. Handle Submit
       waitlistForm.addEventListener('submit', async (e) => {
-        e.preventDefault(); // Stop the form from reloading the page
+        e.preventDefault(); 
 
-        // Disable button and show loading text
         formButton.disabled = true;
         formButton.textContent = 'Submitting...';
         formMessage.textContent = '';
 
         try {
-          // Get data from the form
           const formData = new FormData(waitlistForm);
+          
+          // Logic to get correct service name
+          let finalService = formData.get('service');
+          if (finalService === 'other') {
+            finalService = formData.get('other_service_name');
+          }
+
           const data = {
             name: formData.get('name'),
             email: formData.get('email'),
@@ -402,32 +607,29 @@
             city: formData.get('city') || null,
             age: formData.get('age') ? parseInt(formData.get('age')) : null,
             gender: formData.get('gender') || null,
-            interestedService: formData.get('service') || null,
-            createdAt: serverTimestamp() // Add a timestamp
+            interestedService: finalService,
+            createdAt: serverTimestamp()
           };
 
-          // Send data to Firestore
-          // "waitlist" must match the collection name in your security rules
           const docRef = await addDoc(collection(db, "waitlist"), data);
           
-          // Success!
           formMessage.textContent = "Success! You're on the list. We'll be in touch!";
           formMessage.className = 'success';
-          waitlistForm.reset(); // Clear the form
+          waitlistForm.reset();
+          
+          // Reset the dynamic field visibility
+          otherContainer.classList.remove('visible');
 
         } catch (error) {
-          // Error!
           console.error("Error adding document: ", error);
           formMessage.textContent = "Error: Could not submit. Please try again.";
           formMessage.className = 'error';
         
         } finally {
-          // Re-enable the button
           formButton.disabled = false;
           formButton.textContent = 'Notify Me!';
         }
       });
-
     </script>
 </body>
 </html>
